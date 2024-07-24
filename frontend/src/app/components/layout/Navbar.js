@@ -1,43 +1,27 @@
+// frontend/src/app/components/layout/Navbar.js
 'use client';
 
 import Link from 'next/link';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import WalletConnect from '../WalletConnect';
 
 const Navbar = () => {
-  const { data: session } = useSession();
-
   return (
-    <div className="navbar bg-primary">
-      <div className="navbar-start">
-        <Link href="/" className="btn btn-ghost normal-case text-xl text-primary-content">
-          App Name
-        </Link>
+    <nav className="bg-primary p-4">
+      <div className="container mx-auto flex justify-between items-center">
+        <div className="flex justify-start flex-1">
+          <div className="text-primary-content font-bold text-xl">App Name</div>
+        </div>
+        <div className="flex justify-center flex-1">
+          <ul className="flex space-x-4 items-center">
+            <li><Link href="/" className="text-primary-content hover:text-secondary">Home</Link></li>
+            <li><Link href="/pages/profile" className="text-primary-content hover:text-secondary">Profile</Link></li>
+          </ul>
+        </div>
+        <div className="flex justify-end flex-1">
+          <WalletConnect />
+        </div>
       </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 text-primary-content">
-          <li><Link href="/">Home</Link></li>
-          {session && (
-            <>
-              <li><Link href="/pages/profile">Profile</Link></li>
-            </>
-          )}
-        </ul>
-      </div>
-      <div className="navbar-end">
-        {session ? (
-          <>
-            <span className="text-primary-content mr-4">{session.user.email}</span>
-            <button onClick={() => signOut()} className="btn btn-error text-primary-content">
-              Sign out
-            </button>
-          </>
-        ) : (
-          <button onClick={() => signIn()} className="btn btn-success text-primary-content">
-            Sign in
-          </button>
-        )}
-      </div>
-    </div>
+    </nav>
   );
 };
 

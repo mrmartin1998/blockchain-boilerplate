@@ -1,58 +1,47 @@
 // frontend/src/app/pages/profile/page.js
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { useSession, signOut } from 'next-auth/react';
+import Web3 from 'web3';
 
 const ProfilePage = () => {
-  const { data: session, status } = useSession();
-  const [user, setUser] = useState(null);
+  const [account, setAccount] = useState('');
+  const [balance, setBalance] = useState('');
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      if (session) {
-        const response = await fetch(`/api/users/${session.user.email}`);
-        const data = await response.json();
-        setUser(data.user);
+    loadWeb3();
+    loadBlockchainData();
+  }, []);
+
+  const loadWeb3 = async () => {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      try {
+        await window.ethereum.enable();
+      } catch (error) {
+        console.error('User denied account access');
       }
-    };
+    } else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    } else {
+      console.error('Non-Ethereum browser detected. You should consider trying MetaMask!');
+    }
+  };
 
-    fetchUserData();
-  }, [session]);
-
-  if (status === 'loading') {
-    return <div>Loading...</div>;
-  }
-
-  if (!session) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-base-200">
-        <div className="bg-base-100 p-8 rounded shadow-md w-full max-w-md text-center">
-          <h1 className="text-2xl font-bold mb-6">Please sign in to view your profile</h1>
-          <Link href="/pages/auth/signin" className="btn btn-primary w-full">
-            Sign In
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  const loadBlockchainData = async () => {
+    const web3 = window.web3;
+    const accounts = await web3.eth.getAccounts();
+    setAccount(accounts[0]);
+    const balance = await web3.eth.getBalance(accounts[0]);
+    setBalance(web3.utils.fromWei(balance, 'ether'));
+  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-base-200">
       <div className="bg-base-100 p-8 rounded shadow-md w-full max-w-md text-center">
         <h1 className="text-2xl font-bold mb-6">Profile</h1>
-        <p className="mb-4">Email: {session.user.email}</p>
-        <p className="mb-4">Subscription: {user?.subscriptionStatus || session.user.subscriptionStatus}</p>
-        {session.user.subscriptionStatus === 'free' && (
-          <Link href="/pages/payment/subscribe" className="btn btn-success w-full mb-4">
-            Upgrade to Premium
-          </Link>
-        )}
-        <button onClick={() => signOut()} className="btn btn-error w-full">
-          Sign Out
-        </button>
+        <p><strong>Wallet Address:</strong> {account}</p>
+        <p><strong>Balance:</strong> {balance} ETH</p>
       </div>
     </div>
   );
