@@ -15,14 +15,11 @@ module.exports = {
         base100: '#ffffff',
         base200: '#dedbde',
         base300: '#bebbbe',
-        baseContent: '#161616', // Ensure this matches the desired color
+        baseContent: '#161616',
         info: '#0070ff',
         success: '#82e457',
         warning: '#d5a600',
         error: '#ff4559',
-      },
-      textColor: {
-        DEFAULT: '#161616', // This ensures the default text color is applied globally
       },
     },
   },
@@ -55,4 +52,4 @@ module.exports = {
     ],
   },
   plugins: [require('daisyui')],
-}
+};
