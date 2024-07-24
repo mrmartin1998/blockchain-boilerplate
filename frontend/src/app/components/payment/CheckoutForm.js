@@ -1,4 +1,5 @@
 // frontend/src/app/components/payment/CheckoutForm.js
+
 "use client";
 
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
@@ -71,7 +72,7 @@ const CheckoutForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8 p-6 bg-base-100 shadow-lg rounded-lg">
       <h2 className="text-2xl mb-4">Checkout</h2>
       {message && <p className="mb-4 text-red-500">{message}</p>}
       <input
@@ -79,7 +80,7 @@ const CheckoutForm = () => {
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="border p-2 w-full mb-4"
+        className="input input-bordered w-full mb-4"
         required
       />
       <input
@@ -87,13 +88,13 @@ const CheckoutForm = () => {
         placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="border p-2 w-full mb-4"
+        className="input input-bordered w-full mb-4"
         required
       />
       <CardElement className="border p-2 w-full mb-4" />
       <button
         type="submit"
-        className="bg-blue-500 text-white py-2 px-4 rounded"
+        className="btn btn-primary w-full"
         disabled={!stripe || loading}
       >
         {loading ? 'Processing...' : 'Pay'}

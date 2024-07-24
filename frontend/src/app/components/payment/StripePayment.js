@@ -1,3 +1,5 @@
+// frontend/src/app/components/payment/StripePayment.js
+
 "use client";
 
 import { loadStripe } from '@stripe/stripe-js';

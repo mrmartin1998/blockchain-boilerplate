@@ -1,3 +1,5 @@
+// frontend/src/app/components/auth/SignInForm.js
+
 "use client";
 
 import { signIn } from 'next-auth/react';
@@ -20,23 +22,23 @@ const SignInForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8 p-6 bg-base-100 shadow-lg rounded-lg">
       <h2 className="text-2xl mb-4">Sign In</h2>
       <input
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="border p-2 w-full mb-4"
+        className="input input-bordered w-full mb-4"
       />
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="border p-2 w-full mb-4"
+        className="input input-bordered w-full mb-4"
       />
-      <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">
+      <button type="submit" className="btn btn-primary w-full">
         Sign In
       </button>
     </form>

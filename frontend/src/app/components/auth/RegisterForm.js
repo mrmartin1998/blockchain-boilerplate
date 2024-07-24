@@ -1,3 +1,5 @@
+// frontend/src/app/components/auth/RegisterForm.js
+
 "use client";
 
 import { useState } from 'react';
@@ -30,16 +32,16 @@ const RegisterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8 p-6 bg-base-100 shadow-lg rounded-lg">
       <h2 className="text-2xl mb-4">Register</h2>
-      {error && <p className="text-red-500">{error}</p>}
-      {success && <p className="text-green-500">{success}</p>}
+      {error && <p className="text-error mb-4">{error}</p>}
+      {success && <p className="text-success mb-4">{success}</p>}
       <input
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="border p-2 w-full mb-4"
+        className="input input-bordered w-full mb-4"
         required
       />
       <input
@@ -47,7 +49,7 @@ const RegisterForm = () => {
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        className="border p-2 w-full mb-4"
+        className="input input-bordered w-full mb-4"
         required
       />
       <input
@@ -55,10 +57,10 @@ const RegisterForm = () => {
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="border p-2 w-full mb-4"
+        className="input input-bordered w-full mb-4"
         required
       />
-      <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">
+      <button type="submit" className="btn btn-primary w-full">
         Register
       </button>
     </form>

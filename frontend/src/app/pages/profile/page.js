@@ -1,3 +1,5 @@
+// frontend/src/app/pages/profile/page.js
+
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -26,10 +28,10 @@ const ProfilePage = () => {
 
   if (!session) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="bg-white p-8 rounded shadow-md w-full max-w-md text-center">
-          <h1 className="text-2xl font-bold mb-6 text-black">Please sign in to view your profile</h1>
-          <Link href="/pages/auth/signin" className="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600 block text-center">
+      <div className="min-h-screen flex items-center justify-center bg-base-200">
+        <div className="bg-base-100 p-8 rounded shadow-md w-full max-w-md text-center">
+          <h1 className="text-2xl font-bold mb-6">Please sign in to view your profile</h1>
+          <Link href="/pages/auth/signin" className="btn btn-primary w-full">
             Sign In
           </Link>
         </div>
@@ -38,17 +40,17 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md text-center">
-        <h1 className="text-2xl font-bold mb-6 text-black">Profile</h1>
-        <p className="mb-4 text-black">Email: {session.user.email}</p>
-        <p className="mb-4 text-black">Subscription: {user?.subscriptionStatus || session.user.subscriptionStatus}</p>
+    <div className="min-h-screen flex items-center justify-center bg-base-200">
+      <div className="bg-base-100 p-8 rounded shadow-md w-full max-w-md text-center">
+        <h1 className="text-2xl font-bold mb-6">Profile</h1>
+        <p className="mb-4">Email: {session.user.email}</p>
+        <p className="mb-4">Subscription: {user?.subscriptionStatus || session.user.subscriptionStatus}</p>
         {session.user.subscriptionStatus === 'free' && (
-          <Link href="/pages/payment/subscribe" className="w-full bg-green-500 text-white py-3 rounded hover:bg-green-600 block text-center">
+          <Link href="/pages/payment/subscribe" className="btn btn-success w-full mb-4">
             Upgrade to Premium
           </Link>
         )}
-        <button onClick={() => signOut()} className="w-full bg-red-500 text-white py-3 rounded hover:bg-red-600 block text-center mt-4">
+        <button onClick={() => signOut()} className="btn btn-error w-full">
           Sign Out
         </button>
       </div>

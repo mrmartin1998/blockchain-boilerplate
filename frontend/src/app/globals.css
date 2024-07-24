@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
+  --foreground-rgb: 22, 22, 22; /* This matches baseContent in your Tailwind config */
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
@@ -24,6 +24,11 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  @apply text-base-content; /* Apply the base content text color */
+}
+
+a {
+  @apply text-primary; /* Apply primary color to links */
 }
 
 @layer utilities {
