@@ -3,38 +3,41 @@
 import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
 
-
 const Navbar = () => {
   const { data: session } = useSession();
 
   return (
-    <nav className="bg-primary p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-primary-content font-bold text-xl">App Name</div>
-        <ul className="flex space-x-4">
-          <li><Link href="/" className="text-primary-content hover:text-secondary">Home</Link></li>
-          {session ? (
+    <div className="navbar bg-primary">
+      <div className="navbar-start">
+        <Link href="/" className="btn btn-ghost normal-case text-xl text-primary-content">
+          App Name
+        </Link>
+      </div>
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1 text-primary-content">
+          <li><Link href="/">Home</Link></li>
+          {session && (
             <>
-              <li>
-                <Link href="/pages/profile" className="text-primary-content hover:text-secondary">Profile</Link>
-              </li>
-              <li className="text-primary-content">{session.user.email}</li>
-              <li>
-                <button onClick={() => signOut()} className="text-primary-content bg-error px-4 py-2 rounded">
-                  Sign out
-                </button>
-              </li>
+              <li><Link href="/pages/profile">Profile</Link></li>
             </>
-          ) : (
-            <li>
-              <button onClick={() => signIn()} className="text-primary-content bg-success px-4 py-2 rounded">
-                Sign in
-              </button>
-            </li>
           )}
         </ul>
       </div>
-    </nav>
+      <div className="navbar-end">
+        {session ? (
+          <>
+            <span className="text-primary-content mr-4">{session.user.email}</span>
+            <button onClick={() => signOut()} className="btn btn-error text-primary-content">
+              Sign out
+            </button>
+          </>
+        ) : (
+          <button onClick={() => signIn()} className="btn btn-success text-primary-content">
+            Sign in
+          </button>
+        )}
+      </div>
+    </div>
   );
 };
 
