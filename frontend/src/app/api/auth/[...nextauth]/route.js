@@ -31,6 +31,9 @@ export const authOptions = {
       if (user) {
         token.id = user.id;
         token.subscriptionStatus = user.subscriptionStatus;
+      } else {
+        const dbUser = await User.findById(token.id);
+        token.subscriptionStatus = dbUser ? dbUser.subscriptionStatus : 'free';
       }
       return token;
     },

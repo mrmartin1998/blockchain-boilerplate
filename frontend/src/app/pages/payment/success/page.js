@@ -1,5 +1,3 @@
-// frontend/src/app/pages/success/page.js
-
 'use client';
 
 import React from 'react';

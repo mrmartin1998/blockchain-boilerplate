@@ -1,5 +1,5 @@
 import './globals.css';
-import Navbar from './components/Navbar';
+import Navbar from './components/layout/Navbar';
 import SessionWrapper from './components/SessionWrapper'; // Import SessionWrapper
 
 export default function RootLayout({ children }) {

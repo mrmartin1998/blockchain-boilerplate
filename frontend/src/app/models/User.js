@@ -1,9 +1,7 @@
-// frontend/src/app/models/User.js
-
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -12,33 +10,40 @@ const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
   },
   password: {
     type: String,
     required: true,
   },
-  emailVerified: {
+  verified: {
     type: Boolean,
-    default: true,
+    default: false,
   },
-  lists: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ToDoList' }],
   subscriptionStatus: {
     type: String,
-    enum: ['free', 'premium'],
     default: 'free',
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+}, {
+  timestamps: true,
 });
 
-UserSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    next();
+  }
+
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
-  next();
 });
 
-UserSchema.methods.matchPassword = async function (enteredPassword) {
+userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-export default mongoose.models.User || mongoose.model('User', UserSchema);
+const User = mongoose.models.User || mongoose.model('User', userSchema);
+
+export default User;

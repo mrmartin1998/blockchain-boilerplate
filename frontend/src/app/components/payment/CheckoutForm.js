@@ -1,23 +1,24 @@
-// frontend/src/app/pages/stripe/subscribe/page.js
+// frontend/src/app/components/payment/CheckoutForm.js
+"use client";
 
-'use client';
+import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
+import { useState } from 'react';
 
-import React, { useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
-
-const SubscribeForm = () => {
+const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubscribe = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!stripe || !elements) {
+      setMessage('Stripe has not loaded yet.');
+      setLoading(false);
       return;
     }
 
@@ -28,12 +29,14 @@ const SubscribeForm = () => {
         type: 'card',
         card: cardElement,
         billing_details: {
-          email: email,
+          email,
+          name,
         },
       });
 
       if (error) {
         setMessage(error.message);
+        setLoading(false);
         return;
       }
 
@@ -49,6 +52,7 @@ const SubscribeForm = () => {
 
       if (subscription.error) {
         setMessage('Subscription failed: ' + subscription.error);
+        setLoading(false);
         return;
       }
 
@@ -62,42 +66,40 @@ const SubscribeForm = () => {
       console.error('Error subscribing:', error);
       setMessage('Error subscribing. Please try again.');
     }
+
+    setLoading(false);
   };
 
   return (
-    <form onSubmit={handleSubscribe} className="bg-white p-8 rounded shadow-md w-full max-w-md text-center">
-      <h1 className="text-2xl font-bold mb-6 text-black">Subscribe to Premium</h1>
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
+      <h2 className="text-2xl mb-4">Checkout</h2>
       {message && <p className="mb-4 text-red-500">{message}</p>}
-      <div className="mb-4">
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300 text-black bg-white"
-          required
-        />
-      </div>
-      <div className="mb-4">
-        <CardElement className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" />
-      </div>
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="border p-2 w-full mb-4"
+        required
+      />
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="border p-2 w-full mb-4"
+        required
+      />
+      <CardElement className="border p-2 w-full mb-4" />
       <button
         type="submit"
-        className="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600"
-        disabled={!stripe}
+        className="bg-blue-500 text-white py-2 px-4 rounded"
+        disabled={!stripe || loading}
       >
-        Subscribe
+        {loading ? 'Processing...' : 'Pay'}
       </button>
     </form>
   );
 };
 
-const SubscribePage = () => (
-  <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-    <Elements stripe={stripePromise}>
-      <SubscribeForm />
-    </Elements>
-  </div>
-);
-
-export default SubscribePage;
+export default CheckoutForm;
