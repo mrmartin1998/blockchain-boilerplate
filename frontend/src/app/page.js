@@ -14,10 +14,10 @@ const HomePage = () => {
           This boilerplate provides a ready-to-use foundation for your fullstack web applications. It includes authentication, payment integration, and a modular component structure.
         </p>
         <div className="mb-4">
-          <Link href="/auth/signin" className="btn btn-primary w-full mb-4">
+          <Link href="/pages/auth/signin" className="btn btn-primary w-full mb-4">
             Sign In
           </Link>
-          <Link href="/auth/register" className="btn btn-success w-full">
+          <Link href="/pages/auth/register" className="btn btn-success w-full">
             Register
           </Link>
         </div>
