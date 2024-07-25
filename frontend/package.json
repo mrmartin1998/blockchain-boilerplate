@@ -22,6 +22,7 @@
     "nodemailer": "^6.9.14",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-toastify": "^10.0.5",
     "stripe": "^16.2.0",
     "web3": "^4.11.1"
   },

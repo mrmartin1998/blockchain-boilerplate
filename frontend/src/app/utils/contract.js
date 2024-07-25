@@ -1,11 +1,11 @@
 import web3 from './web3';
-import ExampleContract from '../../../build/contracts/ExampleContract.json';
+import SimpleStorageArtifact from '../../../build/contracts/SimpleStorage.json';
 
 // Deployed contract address (update with your actual contract address)
-const exampleContractAddress = '0xYourContractAddressHere';
+const SimpleStorageAddress = '0x6b4eb3a421802A3C27230391101Ca18F12BCE22E';
 
-const exampleContract = new web3.eth.Contract(ExampleContract.abi, exampleContractAddress);
+const SimpleStorage = new web3.eth.Contract(SimpleStorageArtifact.abi, SimpleStorageAddress);
 
 export {
-    exampleContract
+    SimpleStorage
 };

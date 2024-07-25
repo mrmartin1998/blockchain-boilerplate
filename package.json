@@ -13,6 +13,7 @@
     "mongoose": "^8.5.0",
     "next-auth": "^4.24.7",
     "nodemailer": "^6.9.14",
+    "react-toastify": "^10.0.5",
     "stripe": "^16.2.0"
   }
 }
